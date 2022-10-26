@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script type = "text/JavaScript">    
+    function myFunctionHol() {
+    	//alert('Hello');
+    	var number=document.getElementById("holiday_calendar").value;  
+	    //document.getElementById(holiday_calendar).disabled = "false";
+	   // document.getElementById(holiday_calendar).value;
+	   var val = 5; 
+    	//alert('Hello2' + number);
+    	
+    	var earlierValue=document.getElementById("demo1").innerHTML;
+    	//alert('hhello'+earlierValue);
+    	if (earlierValue === "") {
+    		document.getElementById("demo1").innerHTML = number;
+    	     // alert('Empty')
+
+    	}else {
+    	      document.getElementById("demo1").innerHTML = earlierValue+", "+number;
+    	    //  alert('value')
+
+    	}
+    	document.getElementById("holidays").value=document.getElementById("demo1").innerHTML;
+    }
+
+    function myDate() {
+  	  //alert("Page is loaded");
+  	  n =  new Date();
+  	  y = n.getFullYear();
+  	  m = n.getMonth() + 1;
+  	  d = n.getDate();
+  	 // alert(n)
+  	 // alert(y)
+  	 // alert(m)
+  	  //alert(d)
+  //2022-08-12T19:30
+  currentDate= y + "-" + m.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+  + "-" + d.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
+
+  slot_start_val= currentDate + "T"+"09:00";
+  slot_end_val= currentDate + "T"+"17:00";
+
+  //alert(slot_start_val);
+ // alert(slot_end_val);
+
+  //document.getElementById("slot_start").value = slot_start_val;
+  //document.getElementById("slot_end").value = slot_end_val;
+
+  document.getElementById("slot_start").setAttribute("value", slot_start_val); 
+  document.getElementById("slots_end").setAttribute("value", slot_end_val); 
+
+  document.getElementById("holiday_calendar").setAttribute("value", currentDate); 
+
+  
+  
+  	  //document.getElementById("date").innerHTML = m + "/" + d + "/" + y;
+  	} 
+   
+</script>
+
+<title>IT Admin</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.label {
+  color: white;
+  padding: 8px;
+  font-family: Arial;
+}
+.success {background-color: #4CAF50;} /* Green */
+.info {background-color: #2196F3;} /* Blue */
+.warning {background-color: #ff9800;} /* Orange */
+.danger {background-color: #f44336;} /* Red */ 
+.other {background-color: #e7e7e7; color: black;} /* Gray */ 
+
+
+
+#col-1 {
+  position: relative;
+  width: 50%;
+  float: left;
+  height: 100%;
+}
+
+#col-2 {
+  position: relative;
+  width: 50%;
+  float: right;
+  height: 100%;
+}
+
+div.c {
+  text-align: right;
+} 
+
+</style>
+
+<style>
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 70px;
+  height: 70px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  position: fixed; /* or absolute */
+  top: 80%;
+  left: 40%;
+}
+
+.red{
+color:#0024ff
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+
+
+
+</head>
+
+<body onload="myDate()">
+
+
+<div class="c">
+		<a th:href="@{/}">Home</a> 
+	
+<!-- 	<a href="/admin">IT Admin</a>
+ --></div>
+
+<img src="admin.png" alt="admin"  width="100" height="100" align="right">
+
+ <h2>Create slots</h2>
+
+<form th:action="@{/admin2}" id="usrform" method="POST">
+  <div id="col-1">
+ 
+ 
+
+  <label for="slot_start" class="other"><b>Start Date & Time</b></label><br>
+   <input type="datetime-local" id="slot_start"  name="slot_start" value=""><br><br>
+ 
+<!--   <input type="text" id="slot_start" size="65" name="slot_start" value="2022-08-09 07:30:30"><br><br>
+ --> 
+   <label for="slots_end" class="other"><b>End Date & Time</b></label><br>
+
+<input type="datetime-local" id="slots_end" name="slots_end" value=""><br><br>
+
+<!--   <input type="text" id="slot_end" size="65" name="slot_end" value="2022-08-09 08:30:30"><br><br>
+ --> 
+  
+     <label for="it_email_list" class="other"><b>IT Admin e-mail List</b></label><br>
+  <input type="text" id="it_email_list" size="65" name="it_email_list" value="saurabh.gupta940@hcl.com"><br><br>
+ 
+      <label for="slot_duration" class="other"><b>Slot Duration(in Minutes)</b></label><br>
+  <input type="text" id="slot_duration" size="65" name="slot_duration" value="60"><br><br>
+ 
+       <label for="region" class="other"><b>Region</b></label><br>
+  <input type="text" id="region" size="65" name="region" value="ASIA"><br><br>
+ 
+        <label for="is_booked" class="other"><b>Auto book?</b></label><br>
+  <input type="text" id="is_booked" size="65" name="is_booked" value="0"><br><br>
+
+        <label for="include_weekends" class="other"><b>Include Weekends?</b></label><br>
+  <input type="text" id="include_weekends" size="65" name="is_booked" value="0"><br><br>
+ 
+ <!--  
+ <button onclick="myFunctionHol()">Add Holidays</button>
+ 
+ <input type="text" id="holiday_calendar" name="holiday_calendar" value="2022-08-22">
+ 
+  <p id="demo1"></p>
+ 
+ -->
+ 
+<input type="button" value="Add Holidays" onclick="myFunctionHol()"/>  
+ 
+ <input type="date" id="holiday_calendar" name="holiday_calendar" value="2022-08-22">
+ 
+   
+  <p id="demo1"></p>
+ 
+ 
+        <label for="time_zone" class="other"><b>Time Zone</b></label><br>
+  <input type="text" id="time_zone" size="65" name="time_zone" value="IST"><br><br>
+ 
+<!--    <label for="create_event" class="other"><b>Include Invites ? </b></label> 
+ <input type="checkbox" id="create_event" name="create_event" value="true"><br><br>
+ --> 
+ <input type="submit" value="Create Slots">
+ 
+     <span th:text="${msg}" th:class="red"></span>
+ 
+  </div>
+  
+    <input type="hidden" id="holidays" name="holidays" value="">
+ 
+</form>
+
+</body>
+</html>

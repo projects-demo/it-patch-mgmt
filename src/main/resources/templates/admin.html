@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script>
+function myFunction() {
+    //alert("start");
+
+    document.getElementById("helloid").style.display = ""; 
+    document.getElementById("helloid").className  = "loader"; 
+
+}
+ 
+ /*    $("document").ready( function () {
+        alert("end");
+        document.getElementById("loader").style.display = "none"; 
+
+    });  */
+     
+</script>
+
+<title>IT Admin</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.label {
+  color: white;
+  padding: 8px;
+  font-family: Arial;
+}
+.success {background-color: #4CAF50;} /* Green */
+.info {background-color: #2196F3;} /* Blue */
+.warning {background-color: #ff9800;} /* Orange */
+.danger {background-color: #f44336;} /* Red */ 
+.other {background-color: #e7e7e7; color: black;} /* Gray */ 
+
+
+
+#col-1 {
+  position: relative;
+  width: 50%;
+  float: left;
+  height: 100%;
+}
+
+#col-2 {
+  position: relative;
+  width: 50%;
+  float: right;
+  height: 100%;
+}
+
+div.c {
+  text-align: right;
+} 
+
+</style>
+
+<style>
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 70px;
+  height: 70px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  position: fixed; /* or absolute */
+  top: 80%;
+  left: 40%;
+}
+
+.center {
+  margin: auto;
+  width: 60%;
+  border: 3px solid #73AD21;
+  padding: 10px;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="c">
+<a th:href="@{/}">Home</a> 
+</div>
+
+
+<center><img src="admin_activity.png" alt="Patch Management"  width="300" height="200" align="middle">
+<br/><br/>
+
+
+	<a th:href="@{/admin1}">Create Slot&nbsp;&nbsp;</a> <br>
+	<a th:href="@{/admin2}">Create Slots</a>
+
+</center>
+
+</body>
+</html>

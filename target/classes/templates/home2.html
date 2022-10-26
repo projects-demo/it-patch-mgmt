@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Home</title>
+<script type="text/javascript"></script>
+
+<style>
+
+#menu {
+     font-family: tahoma;
+     margin-top: 10px;
+     margin-right: 10px;
+     position:absolute;
+     top:0;
+     right:0;
+ }
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 70px;
+  height: 70px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  position: fixed; /* or absolute */
+  top: 60%;
+  left: 40%;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td, th {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+
+tr:nth-child(even) {
+	background-color: #dddddd;
+}
+</style>
+
+<script type="text/javascript">
+
+function setValue(source) {
+    //document.getElementById("helloid").style.display = ""; 
+    document.getElementById("loaderid").className  = "loader"; 
+}
+
+</script>
+
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Dialog - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#dialog" ).dialog();
+  } );
+  </script>
+
+<script>
+function myFunction(id) {
+  let emailId = prompt("Please enter your e-mail id", "saurabh.gupta@hcl.com");
+  if (emailId != null) {
+    document.getElementById(id+"-msg").innerHTML = "e-mail invite sent to " + emailId + "..";
+  }
+}
+
+function madeAjaxCall(slot_start, slot_end, id, timeZone){
+let emailId = prompt("Please enter your e-mail id", "saurabh.gupta@hcl.com");
+if (emailId != null) {
+
+    $.ajax({
+     type: "post",
+     url: "/bookslot-and-create-event",
+     cache: false,    
+	 data : 'startDateTime=' + slot_start + '&endDateTime=' + slot_end + '&emailId=' + emailId + "&requestId="+ id + "&timeZone="+ timeZone + "&is_booked="+ true,
+     success: function(response){
+    		document.getElementById("msg-"+id).innerHTML = "e-mail invite sent to " + emailId + "..";
+    	    //document.getElementById("result").className  = ""; 
+    	    document.getElementById("msg-"+id).style.color = "red";
+    	    document.getElementById(id).disabled = "true";
+
+     },
+     error: function(){      
+      alert('Error while request..');
+     }
+    });
+
+   // madeAjaxCall3();
+}
+}
+
+
+
+</script>
+<script src="https://apis.google.com/js/platform.js?onload=onLoadCallback" async defer></script>
+</head>
+<body>
+
+<div id="menu">
+         <a href="/admin" >IT Admin</a>
+</div>
+<br/>
+<center><img src="Patch_icon.png" alt="Patch Management"  width="300" height="200" align="middle">
+</center>
+
+	<table id="listOfAllSlots">
+	    <thead>
+	        <tr>
+	        	<th> Id </th>
+	            <th> Slot Start </th>
+	            <th> Slot End </th>
+	            <th> Time Zone </th>
+	            <th> IT email-list  </th>
+	            <th> Attendee email-list </th>
+	            <th> Region </th>
+	            <th> Booking </th>
+	            
+	            
+	        </tr>
+	    </thead>
+	
+	    <tbody>
+		<tr th:if="${listOfAllSlots == null or listOfAllSlots.empty}">
+	            <td colspan="2"> </td>
+	        </tr>
+	        <tr th:each="slot : ${listOfAllSlots}">
+	        	<!-- <td><span th:text="${slot.sNo}"> sNo </span></td>
+	             -->
+	             	             <td><span th:data-name="${slot.id}" th:text="${slot.id}"> id </span></td>
+	             
+               				    <td><span th:text="${slot.slot_start}"> Availability Slots </span></td>
+					            <td><span th:text="${slot.slot_end}"> Book </span></td>
+	            	            <td><span th:text="${slot.time_zone}"> Book </span></td>
+	            	            <td><span th:text="${slot.it_email_list}"> Book </span></td>
+	            	            <td><span th:text="${slot.attendee_email_list}"> Book </span></td>
+	            	            <td><span th:text="${slot.region}"> Book </span></td>
+<!-- 	            	            <td><span th:text="${slot.is_booked}"> Book </span>
+ -->	            	            
+
+	            	            <td>
+	            	            <button th:disabled="${slot.is_booked}" th:id="${slot.id}" th:onclick="madeAjaxCall([[${slot.slot_start}]], [[${slot.slot_end}]], [[${slot.id}]], [[${slot.time_zone}]])">Book it</button>
+	            	            	
+								<p th:id="'msg-' + ${slot.id}"></p>
+								</td>
+	            	            
+	            
+	        </tr>
+	    </tbody>
+	</table>
+	
+
+        <div class="col-md-2"></div>
+
+  
+
+	
+<div id="loaderid" >
+ 
+</div>
+
+
+</body>
+</html>
